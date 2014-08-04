@@ -24,7 +24,7 @@ module JG
       end
 
       def to_s
-        "Missing attribute '#{@key}' for #{@klass} - args given: #{@args}"
+        "#{self.class}: '#{@key}' for #{@klass} - args given: #{@args}"
       end
     end
 
