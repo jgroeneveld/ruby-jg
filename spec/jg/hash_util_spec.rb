@@ -4,11 +4,11 @@ module JG
   describe HashUtil do
 
     it 'turns strings into symbols' do
-      hash = {"hans" => 2, peter: 3}
+      hash = {1 => "foo", foo: 2, "3" => "bar", nil => "bar"}
 
       new_hash = HashUtil.symbolize_keys(hash)
 
-      expect(new_hash).to eq({ hans: 2, peter: 3 })
+      expect(new_hash).to eq({1=>"foo", :foo=>2, :"3"=>"bar", nil=>"bar"})
     end
 
   end

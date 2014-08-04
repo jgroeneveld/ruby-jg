@@ -4,7 +4,11 @@ module JG
       new_hash = {}
 
       hash.each { |k,v|
-        new_hash[k.to_sym] = v
+        if k.respond_to?(:to_sym)
+          new_hash[k.to_sym] = v
+        else
+          new_hash[k] = v
+        end
       }
 
       return new_hash
