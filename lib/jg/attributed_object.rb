@@ -1,3 +1,5 @@
+require 'jg/hash_util'
+
 module JG
 
   # A module to allow classes to have named attributes as initializing parameters
@@ -68,7 +70,7 @@ module JG
       end
 
       def initialize_attributes(args)
-        @attributes = args.symbolize_keys
+        @attributes = JG::HashUtil.symbolize_keys(args)
         @attributes.keys.each do |key|
           if !self.class.attribute_defs.keys.include?(key)
             raise UnknownAttributeError.new(self.class, key, args)
