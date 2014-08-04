@@ -4,7 +4,7 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'jg/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = "jg ruby utils"
+  spec.name          = "jg"
   spec.version       = JG::VERSION
   spec.authors       = ["Jaap Groeneveld"]
   spec.email         = ["jgroeneveld@me.com"]
