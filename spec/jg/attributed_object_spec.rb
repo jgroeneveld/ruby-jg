@@ -7,6 +7,12 @@ module JG
       attribute :bar
     end
 
+    class DisallowingNil
+      include AttributedObject
+      attribute :bar, disallow: nil
+    end
+
+
     class DefaultFoo
       include AttributedObject
       attribute :bar, default: "my default"
@@ -31,8 +37,14 @@ module JG
       expect(SimpleFoo.new(bar:1).bar).to eq(1)
     end
 
-    it 'allows explicit nil values' do
-      expect(SimpleFoo.new(bar:nil).bar).to eq(nil)
+    describe 'nil control' do
+      it 'allows explicit nil values' do
+        expect(SimpleFoo.new(bar:nil).bar).to eq(nil)
+      end
+
+      it 'can be controlled to not allow explicit nil' do
+        expect{DisallowingNil.new(bar:nil).bar}.to raise_error(AttributedObject::DisallowedValueError)
+      end
     end
 
     describe 'default value' do

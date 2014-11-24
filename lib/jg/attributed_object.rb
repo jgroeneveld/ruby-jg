@@ -7,6 +7,7 @@ module JG
   # Attributes can have a default value or proc
   # attribute :foo, default: 'bar'
   # attribute :foo, default: ->{ Time.now }
+  # attribute :foo, disallow: nil #when false, will raise error if is nil after initialization. default is true
 
   # TODO
   #   - cleanup
@@ -14,7 +15,7 @@ module JG
   #   - use instance vars?
 
   module AttributedObject
-    VERSION = "0.0.1"
+    VERSION = "0.0.2"
 
     class Unset; end
 
@@ -30,6 +31,7 @@ module JG
 
     class MissingAttributeError < KeyError; end
     class UnknownAttributeError < KeyError; end
+    class DisallowedValueError < KeyError; end
 
     def self.included(descendant)
       super
@@ -45,9 +47,10 @@ module JG
         @attribute_defs = parent_defs.clone
       end
 
-      def attribute(attr_name, default: Unset)
+      def attribute(attr_name, default: Unset, disallow: Unset)
         attribute_defs[attr_name] = {
           default: default,
+          disallow: disallow,
         }
 
         define_method "#{attr_name}=" do |value|
@@ -86,6 +89,10 @@ module JG
 
           if !@attributes.has_key?(name)
             raise MissingAttributeError.new(self.class, name, args)
+          end
+
+          if opts[:disallow] != Unset && @attributes[name] == opts[:disallow]
+            raise DisallowedValueError.new(self.class, name, args)
           end
         }
       end
