@@ -15,8 +15,6 @@ module JG
   #   - use instance vars?
 
   module AttributedObject
-    VERSION = "0.0.2"
-
     class Unset; end
 
     class KeyError < StandardError
