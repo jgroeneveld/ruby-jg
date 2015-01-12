@@ -19,6 +19,7 @@ module JG
           child: {
             yes: 1,
             no: nil,
+            inner_array: [{ yes: 1, no: nil, }, nil],
           },
           no: nil,
           normal: 'asd' ,
@@ -29,6 +30,7 @@ module JG
         expect(new_hash).to eq({
           child: {
             yes: 1,
+            inner_array: [{ yes: 1, }],
           },
           normal: 'asd',
         })
